@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Suit Jawa</title>
+  <style>
+    body { font-family: Arial; text-align: center; padding: 30px; }
+    button { margin: 10px; padding: 10px 20px; font-size: 18px; }
+  </style>
+</head>
+<body>
+  <h1>🪨📄✂️ Batu Gunting Kertas</h1>
+  <div>
+    <button onclick="play('Batu')">🪨 Batu</button>
+    <button onclick="play('Gunting')">✂️ Gunting</button>
+    <button onclick="play('Kertas')">📄 Kertas</button>
+  </div>
+  <h2 id="hasil"></h2>
+  <script>
+    function play(player) {
+      const choices = ['Batu', 'Gunting', 'Kertas'];
+      const cpu = choices[Math.floor(Math.random() * 3)];
+      let hasil = '';
+      if (player === cpu) hasil = 'Seri!';
+      else if ((player === 'Batu' && cpu === 'Gunting') ||
+               (player === 'Gunting' && cpu === 'Kertas') ||
+               (player === 'Kertas' && cpu === 'Batu')) hasil = 'Kamu menang!';
+      else hasil = 'Kamu kalah!';
+      document.getElementById('hasil').textContent = `Kamu pilih ${player}, CPU pilih ${cpu}. ${hasil}`;
+    }
+  </script>
+</body>
+</html>

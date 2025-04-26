@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>🎮 Mini Game Web</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: linear-gradient(to right, #f9f9f9, #dfe9f3);
+      padding: 40px;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 30px;
+    }
+    .game-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .game-card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 200px;
+    }
+    .game-card a {
+      text-decoration: none;
+      color: #007BFF;
+      font-weight: bold;
+    }
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: 50px;
+    }
+    .login-form input {
+      padding: 10px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      width: 250px;
+    }
+    .login-form button {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .login-form button:hover {
+      background-color: #0056b3;
+    }
+    .signout-button {
+      padding: 10px 20px;
+      background-color: #FF5733;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .signout-button:hover {
+      background-color: #c74224;
+    }
+  </style>
+</head>
+<body>
+  <!-- Halaman Login -->
+  <div id="loginPage">
+    <h1>🎮 Selamat Datang di Mini Game Web</h1>
+    <div class="login-form">
+      <h2>Masukkan Nama Pengguna</h2>
+      <input type="text" id="username" placeholder="Nama Pengguna" required />
+      <button onclick="login()">Masuk</button>
+    </div>
+  </div>
+
+  <!-- Halaman Utama setelah Login -->
+  <div id="mainPage" style="display: none;">
+    <h1>🎮 Selamat Datang di Mini Game Web, <span id="welcomeUser"></span>!</h1>
+    <button class="signout-button" onclick="signOut()">Sign Out</button>
+    <div class="game-list">
+      <div class="game-card">
+        <p>Tebak Angka</p>
+        <a href="tebak-angka.html">Mainkan</a>
+      </div>
+      <div class="game-card">
+        <p>Tic Tac Toe</p>
+        <a href="tic-tac-toe.html">Mainkan</a>
+      </div>
+      <div class="game-card">
+        <p>Suit Batu Gunting Kertas</p>
+        <a href="suit.html">Mainkan</a>
+      </div>
+      <div class="game-card">
+        <p>Quiz Pilihan Ganda</p>
+        <a href="quiz.html">Mainkan</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Fungsi untuk login
+    function login() {
+      const username = document.getElementById("username").value;
+      if (username) {
+        // Simpan nama pengguna di localStorage
+        localStorage.setItem('username', username);
+        // Pindah ke halaman utama
+        document.getElementById("loginPage").style.display = "none";
+        document.getElementById("mainPage").style.display = "block";
+        document.getElementById("welcomeUser").textContent = username;
+      } else {
+        alert("Nama pengguna harus diisi!");
+      }
+    }
+
+    // Cek apakah ada nama pengguna yang sudah login sebelumnya
+    window.onload = function() {
+      const username = localStorage.getItem('username');
+      if (username) {
+        document.getElementById("loginPage").style.display = "none";
+        document.getElementById("mainPage").style.display = "block";
+        document.getElementById("welcomeUser").textContent = username;
+      }
+    }
+
+    // Fungsi untuk Sign Out
+    function signOut() {
+      // Hapus nama pengguna dari localStorage
+      localStorage.removeItem('username');
+      // Kembali ke halaman login
+      document.getElementById("mainPage").style.display = "none";
+      document.getElementById("loginPage").style.display = "block";
+    }
+  </script>
+</body>
+</html>

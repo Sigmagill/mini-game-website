@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz dengan Level dan Leaderboard</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 30px; }
+    .option { margin: 10px; padding: 10px 20px; font-size: 16px; cursor: pointer; }
+    #result, #level { margin-top: 20px; font-size: 18px; }
+    #leaderboard { margin-top: 30px; }
+
+
+  </style>
+</head>
+<body>
+  <h1>🧠 Quiz Pengetahuan Umum</h1>
+  <div id="quiz">
+    <p id="pertanyaan"></p>
+    <div id="opsi"></div>
+    <p id="feedback"></p>
+    <p id="level"></p>
+  </div>
+  <div id="result"></div>
+  <div id="leaderboard"></div>
+
+  <script>
+    const soal = [
+  {
+    pertanyaan: "Apa ibu kota Indonesia?",
+    opsi: ["Surabaya", "Jakarta", "Bandung", "Medan", "Yogyakarta"],
+    jawaban: "Jakarta"
+  },
+  {
+    pertanyaan: "Jika semua bunga mawar berwarna merah, dan bunga ini adalah bunga mawar, maka bunga ini berwarna?",
+    opsi: ["Merah", "Biru", "Kuning", "Putih", "Hijau"],
+    jawaban: "Merah"
+  },
+  {
+    pertanyaan: "Jika hari ini hujan, maka jalanan akan basah. Hari ini hujan. Apa yang terjadi pada jalanan?",
+    opsi: ["Basah", "Kering", "Mendung", "Licin", "Berdebu"],
+    jawaban: "Basah"
+  },
+  {
+    pertanyaan: "Semua siswa di sekolah ini suka matematika. Rudi adalah siswa di sekolah ini. Apa yang disukai Rudi?",
+    opsi: ["Matematika", "Fisika", "Kimia", "Biologi", "Ekonomi"],
+    jawaban: "Matematika"
+  },
+  {
+    pertanyaan: "Jika A lebih besar dari B dan B lebih besar dari C, siapa yang paling kecil?",
+    opsi: ["A", "B", "C", "D", "E"],
+    jawaban: "C"
+  },
+  {
+    pertanyaan: "Jika saya menanam pohon, maka saya akan mendapatkan buah. Saya menanam pohon. Apa yang akan saya dapatkan?",
+    opsi: ["Bunga", "Daun", "Buah", "Akar", "Batang"],
+    jawaban: "Buah"
+  },
+  {
+    pertanyaan: "Jika semua ayam bertelur, maka telur ayam bisa dimasak. Sebuah telur berasal dari ayam. Apa yang bisa dilakukan dengan telur?",
+    opsi: ["Dimakan", "Dibiarkan", "Dibakar", "Disiram", "Dibuang"],
+    jawaban: "Dimakan"
+  },
+  {
+    pertanyaan: "Jika semua manusia perlu makan, dan saya adalah manusia, maka saya perlu?",
+    opsi: ["Tidur", "Berjalan", "Makan", "Bermain", "Minum"],
+    jawaban: "Makan"
+  },
+  {
+    pertanyaan: "Jika semua mobil beroda empat, maka mobil ini beroda?",
+    opsi: ["Tiga", "Empat", "Lima", "Dua", "Enam"],
+    jawaban: "Empat"
+  },
+  {
+    pertanyaan: "Semua kucing suka bermain. Putih adalah seekor kucing. Apa yang dilakukan Putih?",
+    opsi: ["Tidur", "Bermain", "Makan", "Berenang", "Terbang"],
+    jawaban: "Bermain"
+  },
+  {
+    pertanyaan: "Jika A lebih tinggi dari B dan B lebih tinggi dari C, siapa yang paling tinggi?",
+    opsi: ["A", "B", "C", "D", "E"],
+    jawaban: "A"
+  },
+  {
+    pertanyaan: "Jika saya memiliki dua apel dan memberikan satu kepada teman, berapa apel yang saya miliki?",
+    opsi: ["Satu", "Dua", "Tiga", "Empat", "Lima"],
+    jawaban: "Satu"
+  },
+  {
+    pertanyaan: "Semuanya burung dapat terbang. Elang adalah burung. Apakah elang dapat terbang?",
+    opsi: ["Ya", "Tidak", "Mungkin", "Tidak selalu", "Tidak pasti"],
+    jawaban: "Ya"
+  },
+  {
+    pertanyaan: "Jika mobil berjalan lebih cepat dari sepeda, dan sepeda berjalan lebih cepat dari jalan kaki, siapa yang bergerak paling cepat?",
+    opsi: ["Mobil", "Sepeda", "Jalan kaki", "Motor", "Kereta"],
+    jawaban: "Mobil"
+  },
+  {
+    pertanyaan: "Jika semua permen rasa manis, dan saya makan permen, maka permen yang saya makan?",
+    opsi: ["Asam", "Pahit", "Manis", "Pedas", "Gurih"],
+    jawaban: "Manis"
+  },
+  {
+    pertanyaan: "Jika A lebih besar dari B dan B lebih besar dari C, maka A lebih besar dari?",
+    opsi: ["C", "B", "A", "D", "E"],
+    jawaban: "C"
+  },
+  {
+    pertanyaan: "Jika saya memiliki 3 buah apel dan memberikan dua buah kepada teman, berapa apel yang saya miliki?",
+    opsi: ["Tiga", "Satu", "Dua", "Lima", "Empat"],
+    jawaban: "Satu"
+  },
+  {
+    pertanyaan: "Semua burung bisa berbunyi. Putih adalah seekor burung. Apa yang dilakukan Putih?",
+    opsi: ["Tidak berbunyi", "Bisa berbunyi", "Bisa terbang", "Bisa berlari", "Bisa berenang"],
+    jawaban: "Bisa berbunyi"
+  },
+  {
+    pertanyaan: "Jika dia pergi ke pasar, maka dia akan membeli sayuran. Dia pergi ke pasar. Apa yang dia beli?",
+    opsi: ["Sayuran", "Buah", "Barang elektronik", "Pakaian", "Mainan"],
+    jawaban: "Sayuran"
+  },
+  {
+    pertanyaan: "If all cats are animals and this is a cat, what is it?",
+    opsi: ["Animal", "Bird", "Fish", "Reptile", "Insect"],
+    jawaban: "Animal"
+  },
+  {
+    pertanyaan: "If all birds can fly and a sparrow is a bird, can a sparrow fly?",
+    opsi: ["Yes", "No", "Maybe", "Sometimes", "I don't know"],
+    jawaban: "Yes"
+  },
+  {
+    pertanyaan: "If all squares have four sides and this is a square, how many sides does it have?",
+    opsi: ["3", "4", "5", "6", "7"],
+    jawaban: "4"
+  },
+  {
+    pertanyaan: "If A is greater than B and B is greater than C, who is the smallest?",
+    opsi: ["A", "B", "C", "D", "E"],
+    jawaban: "C"
+  },
+  {
+    pertanyaan: "If you study hard, you will pass the test. You studied hard. What will happen?",
+    opsi: ["Fail", "Pass", "Get distracted", "Not study", "Skip"],
+    jawaban: "Pass"
+  },
+  {
+    pertanyaan: "If all fish live in water and this is a fish, where does it live?",
+    opsi: ["On land", "In water", "In the air", "In a tree", "In the sky"],
+    jawaban: "In water"
+  },
+  {
+    pertanyaan: "If you have two apples and give one to a friend, how many apples do you have?",
+    opsi: ["1", "2", "3", "4", "5"],
+    jawaban: "1"
+  },
+  {
+    pertanyaan: "If all humans need oxygen, and I am human, do I need oxygen?",
+    opsi: ["Yes", "No", "Maybe", "Sometimes", "I don't know"],
+    jawaban: "Yes"
+  }
+      // Tambahkan lebih banyak soal di sini
+    ];
+
+    let indeksSoal = 0;
+    let skor = 0;
+    let level = 1;
+    const leaderboard = [];
+
+    function tampilkanSoal() {
+      if (indeksSoal >= soal.length) {
+        document.getElementById("quiz").style.display = "none";
+        document.getElementById("result").textContent = `🎉 Quiz selesai! Skor kamu: ${skor}/${soal.length}`;
+        updateLeaderboard();
+        return;
+      }
+
+      const data = soal[indeksSoal];
+      document.getElementById("pertanyaan").textContent = data.pertanyaan;
+      document.getElementById("feedback").textContent = "";
+      const opsiContainer = document.getElementById("opsi");
+      opsiContainer.innerHTML = "";
+
+      data.opsi.forEach((opsiText) => {
+        const tombol = document.createElement("button");
+        tombol.textContent = opsiText;
+        tombol.className = "option";
+        tombol.onclick = () => cekJawaban(opsiText);
+        opsiContainer.appendChild(tombol);
+      });
+
+      document.getElementById("level").textContent = `Level: ${level}`;
+    }
+
+    function cekJawaban(pilihan) {
+      const benar = soal[indeksSoal].jawaban;
+      if (pilihan === benar) {
+        skor++;
+        document.getElementById("feedback").textContent = "✅ Benar!";
+        if (skor % 3 === 0) { // Setiap 3 soal benar, naik level
+          level++;
+        }
+      } else {
+        document.getElementById("feedback").textContent = `❌ Salah! Jawaban yang benar: ${benar}`;
+      }
+
+      setTimeout(() => {
+        indeksSoal++;
+        tampilkanSoal();
+      }, 1000);
+    }
+
+    function updateLeaderboard() {
+      leaderboard.push(skor);
+      leaderboard.sort((a, b) => b - a); // Urutkan skor dari yang tertinggi
+      const leaderboardContainer = document.getElementById("leaderboard");
+      leaderboardContainer.innerHTML = "<h2>Leaderboard</h2>";
+
+      leaderboard.slice(0, 5).forEach((score, index) => {
+        const div = document.createElement("div");
+        div.textContent = `${index + 1}. Skor: ${score}`;
+        leaderboardContainer.appendChild(div);
+      });
+    }
+
+    // Mulai quiz
+    tampilkanSoal();
+  </script>
+</body>
+</html>

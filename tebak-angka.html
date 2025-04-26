@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Tebak Angka</title>
+  <style>
+    body { font-family: Arial; text-align: center; padding: 30px; }
+    input, button { font-size: 16px; padding: 8px; margin-top: 10px; }
+    #result { margin-top: 20px; font-size: 18px; }
+  </style>
+</head>
+<body>
+  <h1>🎯 Tebak Angka!</h1>
+  <p>Masukkan angka antara 1 dan 100:</p>
+  <input type="number" id="guessInput" min="1" max="100" />
+  <button onclick="cekTebakan()">Tebak</button>
+  <div id="result"></div>
+  <script>
+    const angkaRandom = Math.floor(Math.random() * 100) + 1;
+    let percobaan = 0;
+    function cekTebakan() {
+      const guess = Number(document.getElementById('guessInput').value);
+      percobaan++;
+      const result = document.getElementById('result');
+      if (guess < angkaRandom) result.textContent = '📉 Terlalu kecil!';
+      else if (guess > angkaRandom) result.textContent = '📈 Terlalu besar!';
+      else result.textContent = `🎉 Benar! Kamu butuh ${percobaan} percobaan.`;
+    }
+  </script>
+</body>
+</html>
